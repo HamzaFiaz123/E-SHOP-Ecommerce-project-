@@ -7,7 +7,7 @@ include "functions.php";
 <head>
 <?php
 
-include "links.php";
+include "links.phpphp";
 ?>
 
 </head>
