@@ -3,7 +3,7 @@
 ?>
 <div class="alert text-white bg-dark alert-dismissible text-center">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong> Sale Up To 50%fbg </strong>Biggest Discounts. Hurry! Limited Perriod Offer
+  <strong> Sale Up To 50%</strong>Biggest Discounts. Hurry! Limited Perriod Offer
 </div>
 
 <div class="container-fluid">
