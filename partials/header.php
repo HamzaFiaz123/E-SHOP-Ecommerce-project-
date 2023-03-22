@@ -8,9 +8,7 @@
 
 <div class="container-fluid">
   <nav class="navbar navbar-expand-lg">
-    <a href="index.php" class="navbar-brand">
-      <img src="images/logo-black.png" class="logo" alt="">
-    </a>
+    <a href="index.php" class="navbar-brand" style="color:black;font-size:30px;font-weight:bold">E-SHOP</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
