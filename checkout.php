@@ -69,41 +69,10 @@ if (!isset($_SESSION['email'])) {
             </form>
         </div>
         <div class=" col-lg-4 border py-3 px-3 ml-5" style="background-color: #f2f2f2;">
-        <form method="post" action="">
-            <h3 class="mb-3">Your Order</h3>
-            <h5 class="mb-3">Products</h5>
-            <hr>
-            <?php
-            $ip_add = getIPAddress();
-            $total = 0;
-            $cart_check = "SELECT * FROM cart where ip_add='$ip_add'";
-            $query_result = mysqli_query($conn, $cart_check);
-            while ($row = mysqli_fetch_array($query_result)) {
-                $pro_id = $row['product_id'];
-                $qty = $row['qty'];
-                $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
-                $result = mysqli_query($conn, $sql_pro_show);
-                while ($row = mysqli_fetch_array($result)) {
-                    // echo $pro_id = implode(array($row['id']));
-                    $pro_id = $row['id'];
-                    $pro_name = $row['prod_name'];
-                    $pro_price = $row['prod_price'];
-                    $pro_image = $row['prod_image'];
-                    $total = $total + ($qty * $pro_price);
-
-                    echo '
-                            <div class="mb-2 d-flex">
-                        <label for="">' . $pro_name . '</label>
-                        <p class="ml-auto">' . $pro_price . '$</p>
-                    </div><hr>';
-                }
-
-            }
-
-
-            ?>
-
-            <div class="mb-3 d-flex">
+            <form method="post" action="">
+                <h3 class="mb-3">Your Order</h3>
+                <h5 class="mb-3">Products</h5>
+                <hr>
                 <?php
                 $ip_add = getIPAddress();
                 $total = 0;
@@ -115,115 +84,129 @@ if (!isset($_SESSION['email'])) {
                     $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
                     $result = mysqli_query($conn, $sql_pro_show);
                     while ($row = mysqli_fetch_array($result)) {
-                        
+                        // echo $pro_id = implode(array($row['id']));
                         $pro_id = $row['id'];
                         $pro_name = $row['prod_name'];
                         $pro_price = $row['prod_price'];
                         $pro_image = $row['prod_image'];
                         $total = $total + ($qty * $pro_price);
-                        $_SESSION['due_amount'] = $total;
-                        $due_amount = $_SESSION['due_amount'];
 
+                        echo '
+                            <div class="mb-2 d-flex">
+                        <label for="">' . $pro_name . '</label>
+                        <p class="ml-auto">' . $pro_price . '$</p>
+                    </div><hr>';
                     }
-
                 }
+
+
                 ?>
-                <label for="">Subtotal</label>
-                <p class="ml-auto">
-                    <?php
-                    echo $total;
 
-                    ?>
-                    $
-                </p>
-            </div>
-            <h5 class="mb-3">Shipping</h5>
-            <input type="radio">
-            <label for="">Local</label><br>
-            <input type="radio">
-            <label for="">Flat Rate</label>
-            <hr>
-            <div class="mb-3 d-flex">
-                <label for="">Total</label>
-                <p class="ml-auto">
+                <div class="mb-3 d-flex">
                     <?php
-                    echo $total;
-
-                    ?>
-                    $
-                </p>
-            </div>
-            <h5 class="mb-3">Payments Method</h5>
-            <select class="form-control form-group w-75" name="payment_method">
-                <option>Please Select</option>
-                    <?php
-                        $sql_pro_show = "SELECT * FROM payments_methods";
+                    $ip_add = getIPAddress();
+                    $total = 0;
+                    $cart_check = "SELECT * FROM cart where ip_add='$ip_add'";
+                    $query_result = mysqli_query($conn, $cart_check);
+                    while ($row = mysqli_fetch_array($query_result)) {
+                        $pro_id = $row['product_id'];
+                        $qty = $row['qty'];
+                        $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
                         $result = mysqli_query($conn, $sql_pro_show);
-                        if (mysqli_num_rows($result) >= 1) {
-                            while ($row = mysqli_fetch_array($result)) {
-                                $id = $row['id'];
-                                $payment_method = $row['payment_method'];
-                                echo "<option value='$payment_method'>$payment_method</option>";
-                                
-                            }
+                        while ($row = mysqli_fetch_array($result)) {
+
+                            $pro_id = $row['id'];
+                            $pro_name = $row['prod_name'];
+                            $pro_price = $row['prod_price'];
+                            $pro_image = $row['prod_image'];
+                            $total = $total + ($qty * $pro_price);
+                            $_SESSION['due_amount'] = $total;
+                            $due_amount = $_SESSION['due_amount'];
                         }
+                    }
                     ?>
-            </select>
-            
+                    <label for="">Subtotal</label>
+                    <p class="ml-auto">
+                        <?php
+                        echo $total;
+
+                        ?>
+                        $
+                    </p>
+                </div>
+                <h5 class="mb-3">Shipping</h5>
+                <input type="radio">
+                <label for="">Local</label><br>
+                <input type="radio">
+                <label for="">Flat Rate</label>
+                <hr>
+                <div class="mb-3 d-flex">
+                    <label for="">Total</label>
+                    <p class="ml-auto">
+                        <?php
+                        echo $total;
+
+                        ?>
+                        $
+                    </p>
+                </div>
+                <h5 class="mb-3">Payments Method</h5>
+                <select class="form-control form-group w-75" name="payment_method">
+                    <option>Please Select</option>
+                    <?php
+                    $sql_pro_show = "SELECT * FROM payments_methods";
+                    $result = mysqli_query($conn, $sql_pro_show);
+                    if (mysqli_num_rows($result) >= 1) {
+                        while ($row = mysqli_fetch_array($result)) {
+                            $id = $row['id'];
+                            $payment_method = $row['payment_method'];
+                            echo "<option value='$payment_method'>$payment_method</option>";
+                        }
+                    }
+                    ?>
+                </select>
+
                 <button type="submit" name="place-order-btn" class="btn btn-dark">Place Order</button>
             </form>
 
             <?php
             if (isset($_POST['place-order-btn'])) {
-            $ip = getIPAddress();
-            $cus_id = $_SESSION['id'];
-            $payment_method=$_POST['payment_method'];
-            $invoice = mt_rand(1, 10000);
-            $order_status = "pending";
-            $payment_status = "unpaid";
-
-            echo $sql = "INSERT INTO `customer_orders`( due_amount, invoice_number, order_date,payment_status , order_status) VALUES ( '$due_amount', '$invoice',Now(),'$payment_status', '$order_status')";
-                        $result = mysqli_query($conn, $sql);
-                        $Update_stock = "UPDATE products SET Reamaining_stock='$stock' where id=$pro_id ";
-                        $results = mysqli_query($conn, $Update_stock);
-
-                
-            $cart_check = "SELECT * FROM cart where ip_add='$ip_add'";
-            $query_result = mysqli_query($conn, $cart_check);
-            echo var_dump($query_result);
-            while ($row = mysqli_fetch_array($query_result)) {
-                $pro_id = $row['product_id'];
-                $qty = $row['qty'];
-                $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
-                $result = mysqli_query($conn, $sql_pro_show);
-                while ($row = mysqli_fetch_array($result)) {
-                    
-                    $pro_id = $row['id'];
-                    $stock = $row['Reamaining_stock'] - $qty;
-                
-                        
-                        echo $sql2 = "INSERT INTO `orders_details`(customer_id, due_amount, invoice_number, order_date, selected_payment_mode, product_id, qty, payment_status, order_status) VALUES( '$cus_id','$due_amount', '$invoice',Now(),'$payment_method','$pro_id','$qty','$payment_status', '$order_status')";
-                        $result2 = mysqli_query($conn, $sql2);
-                        if ($result) {
-                            $delte_cart = "delete from cart where ip_add='$ip'";
-                            $result_delete = mysqli_query($conn, $delte_cart);
-                            echo "
-                            <script>swal('Order Placed!', 'Your order placed successfully ', 'success');</script>
-                        ";
-        
-                        } else {
-                            echo "
-                            <script>swal('Order not placed!', 'Please try again', 'error');</script>
-                        ";
-                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                $ip = getIPAddress();
+                $cus_id = $_SESSION['id'];
+                $payment_method = $_POST['payment_method'];
+                $invoice = mt_rand(1, 10000);
+                $order_status = "pending";
+                $payment_status = "unpaid";
+                $cart_check = "SELECT * FROM cart where ip_add='$ip_add'";
+                $query_result = mysqli_query($conn, $cart_check);
+                $sql = "INSERT INTO `customer_orders`(due_amount, invoice_number, order_date, payment_status, order_status) VALUES( '$due_amount', '$invoice',Now(),'$payment_status', '$order_status')";
+                $result = mysqli_query($conn, $sql);
+                if ($result) {
+                    while ($row = mysqli_fetch_array($query_result)) {
+                        $pro_id = $row['product_id'];
+                        $qty = $row['qty'];
+                        echo $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
+                        $result2 = mysqli_query($conn, $sql_pro_show);
+                        while ($row2 = mysqli_fetch_array($result2)) {
+                            $pro_id = $row2['id'];
+                            $stock = $row2['Reamaining_stock'] - $qty;
+                           echo $sql2 = "INSERT INTO `orders_details`(customer_id, selected_payment_mode, product_id, qty) VALUES( '$cus_id','$payment_method','$pro_id','$qty')";
+                            $result3 = mysqli_query($conn, $sql2);
                         }
                     }
-                    
-
+                    $delte_cart = "delete from cart where ip_add='$ip'";
+                    $result_delete = mysqli_query($conn, $delte_cart);
+                    echo "
+                    <script>swal('Order Placed!', 'Your order placed successfully ', 'success');</script>
+                ";
+                } else {
+                    echo "
+                    <script>swal('Order not placed!', 'Please try again', 'error');</script>
+                ";
+                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
-
             }
-         
+
 
             ?>
         </div>
