@@ -33,6 +33,7 @@ include "../functions.php";
                             <div class="col-md-12">
                                 <div class="page_title">
                                     <h2>Order Details</h2>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -44,11 +45,10 @@ include "../functions.php";
                                             <th>Id</th>
                                             <th>Invoice number</th>
                                             <th>Customer name</th>
-                                            <th>Amount Due</th>
                                             <th>Payment Mode</th>
-                                            <th>Order Date</th>
                                             <th>Payment status</th>
                                             <th>Order status</th>
+                                            <th>Quantity</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -56,19 +56,18 @@ include "../functions.php";
                                         if (isset($_GET['order_id'])) {
                                             $order_id = $_GET['order_id'];
                                         }
-                                        $sql_pro_show = "SELECT * FROM customer_orders where id='$order_id'";
+                                        $sql_pro_show = "SELECT * FROM orders_details where order_id='$order_id'";
                                         $result = mysqli_query($conn, $sql_pro_show);
                                         while ($row = mysqli_fetch_array($result)) {
                                             $order_id = $row['id'];
-                                            $due_amount = $row['due_amount'];
-                                            $invoice_number = $row['invoice_number'];
-                                            $status = $row['order_status'];
-                                            $order_date = $row['order_date'];
-                                            $Payment_Mode = $row['Selected_payment_mode'];
-                                            $payment_status = $row['payment_status'];
-                                            $order_status = $row['order_status'];
+                                            // $due_amount = $row['due_amount'];
+                                            $invoice_number = $row['inovoice_num'];
+
+                                            // $order_date = $row['order_date'];
+                                            $Payment_Mode = $row['selected_payment_mode'];
                                             $cus_id = $row['customer_id'];
                                             $pro_id = $row['product_id'];
+                                            $qty = $row['qty'];
                                             $select_customer = "SELECT * FROM customer_account where id='$cus_id'";
                                             $result_query = mysqli_query($conn, $select_customer);
                                             while ($row = mysqli_fetch_array($result_query)) {
@@ -87,23 +86,22 @@ include "../functions.php";
                                             <a href="customer_details.php?cus_id=' . $cus_id . '" class="btn btn-info">View Details</a>
                                         </td>
                                         <td>
-                                            <p>' . $due_amount . '$</p>
-                                        </td>
-                                        <td>
                                             <p>' . $Payment_Mode . '</p>
                                         </td>
+                                      
                                         <td>
-                                            <p>' . $order_date . '</p>
+                                            <p>' . ' ' . '</p>
                                         </td>
                                         <td>
-                                            <p>' . $payment_status . '</p>
-                                        </td>
-                                        <td>
-                                            <p>' . $order_status . '</p>
+                                            
                                             <a href="change_order_status.php?order_id=' . $order_id . '" name="change_order_status" class="btn btn-info">Change Details</a>
+                                        </td>
+                                        <td>
+                                            <p>' . $qty . '</p>
+                                        </td>
                                     </tr>';
                                         }
-                                        if(isset($_POST['change_order_status'])){
+                                        if (isset($_POST['change_order_status'])) {
                                             echo "sfdsgf";
                                         }
                                         ?>
@@ -131,37 +129,43 @@ include "../functions.php";
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
-                                        $result = mysqli_query($conn, $sql_pro_show);
-                                        while ($row = mysqli_fetch_array($result)) {
-                                            $pro_id = $row['id'];
-                                            $pro_name = $row['prod_name'];
-                                            $pro_price = $row['prod_price'];
-                                            $prod_category = $row['prod_category'];
-                                            $pro_image = $row['prod_image'];
-                                            $pro_desc = $row['prod_description'];
-                                            // $total = $total + ($qty * $pro_price);
-                                            // $_SESSION['amount_due'] = $total;
-                                        
+                                        if (isset($_GET['order_id'])) {
+                                            $order_id = $_GET['order_id'];
+                                        }
+                                       $sql_pro_show2 = "SELECT * FROM orders_details where order_id='$order_id'";
+                                        $result2 = mysqli_query($conn, $sql_pro_show2);
+                                        while ($row2 = mysqli_fetch_array($result2)) {
+                                            $pro_id = $row2['product_id'];
+                                            $sql_pro_show3 = "SELECT * FROM products where id='$pro_id'";
+                                            $result3 = mysqli_query($conn, $sql_pro_show3);
+                                            while ($row3 = mysqli_fetch_array($result3)) {
+                                                $pro_name = $row3['prod_name'];
+                                                $pro_price = $row3['prod_price'];
+                                                $prod_category = $row3['prod_category'];
+                                                $pro_image = $row3['prod_image'];
+                                                $pro_desc = $row3['prod_description'];
+                                                // $total = $total + ($qty * $pro_price);
+                                                // $_SESSION['amount_due'] = $total;
 
-                                            echo '<tr>
-                                <td>
-                                    <img src="../uploaded_images/' . $pro_image . '" style="height: 150px;">                                    
-                                </td>
-                                <td>
-                                <p>' . $pro_name . '</p>                                    
-                                </td>
-                                <td>
-                                <p>' . $prod_category . '</p>                        
-                                </td>
-                                <td>
-                                <p>' . $pro_price . '$</p>                        
-                                </td>
-                                <td>
-                                <p>' . $pro_desc . '</p>
-                                </td>
-                            </tr>';
 
+                                                echo '<tr>
+                                                            <td>
+                                                                <img src="../uploaded_images/' . $pro_image . '" style="height: 150px;">                                    
+                                                            </td>
+                                                            <td>
+                                                            <p>' . $pro_name . '</p>                                    
+                                                            </td>
+                                                            <td>
+                                                            <p>' . $prod_category . '</p>                        
+                                                            </td>
+                                                            <td>
+                                                            <p>' . $pro_price . '$</p>                        
+                                                            </td>
+                                                            <td>
+                                                            <p>' . $pro_desc . '</p>
+                                                            </td>
+                                                        </tr>';
+                                            }
                                         }
                                         ?>
                                     </tbody>

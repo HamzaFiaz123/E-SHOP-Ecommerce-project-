@@ -181,16 +181,21 @@ if (!isset($_SESSION['email'])) {
                 $query_result = mysqli_query($conn, $cart_check);
                 $sql = "INSERT INTO `customer_orders`(due_amount, invoice_number, order_date, payment_status, order_status) VALUES( '$due_amount', '$invoice',Now(),'$payment_status', '$order_status')";
                 $result = mysqli_query($conn, $sql);
+                $order_id = mysqli_insert_id($conn);
                 if ($result) {
+
                     while ($row = mysqli_fetch_array($query_result)) {
                         $pro_id = $row['product_id'];
                         $qty = $row['qty'];
-                        echo $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
+                        $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
                         $result2 = mysqli_query($conn, $sql_pro_show);
                         while ($row2 = mysqli_fetch_array($result2)) {
                             $pro_id = $row2['id'];
+                            $pro_price = $row2['prod_price'];
                             $stock = $row2['Reamaining_stock'] - $qty;
-                           echo $sql2 = "INSERT INTO `orders_details`(customer_id, selected_payment_mode, product_id, qty) VALUES( '$cus_id','$payment_method','$pro_id','$qty')";
+                            $update_stock_query = "UPDATE products SET Reamaining_stock='$stock' WHERE id='$pro_id'";
+                            $resul = mysqli_query($conn, $update_stock_query);
+                           $sql2 = "INSERT INTO `orders_details`(order_id,inovoice_num,customer_id, selected_payment_mode, product_id, qty,poduct_price) VALUES( $order_id,'$invoice','$cus_id','$payment_method','$pro_id','$qty','$pro_price')";
                             $result3 = mysqli_query($conn, $sql2);
                         }
                     }
