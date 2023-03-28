@@ -154,10 +154,10 @@ include("../functions.php");
                                 <p>' . $due_amount . '$</p>
                             </td>
                             <td>
-                                <p>' . $status . '</p>
+                                <p>' . $order_status . '</p>
                             </td>
                             <td>
-                                <p>' . $order_status . '</p>
+                                <p>' .   $status. '</p>
                             </td>
                             <td>
                                 <a href="orders_details.php?order_id='.$order_id.'" class="btn btn-success">View Details</a>

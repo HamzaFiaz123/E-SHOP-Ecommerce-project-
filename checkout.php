@@ -179,7 +179,7 @@ if (!isset($_SESSION['email'])) {
                 $payment_status = "unpaid";
                 $cart_check = "SELECT * FROM cart where ip_add='$ip_add'";
                 $query_result = mysqli_query($conn, $cart_check);
-                $sql = "INSERT INTO `customer_orders`(due_amount, invoice_number, order_date, payment_status, order_status) VALUES( '$due_amount', '$invoice',Now(),'$payment_status', '$order_status')";
+                $sql = "INSERT INTO `customer_orders`(customer_id,due_amount, invoice_number, order_date, payment_status, order_status) VALUES('$cus_id','$due_amount', '$invoice',Now(),'$payment_status', '$order_status')";
                 $result = mysqli_query($conn, $sql);
                 $order_id = mysqli_insert_id($conn);
                 if ($result) {

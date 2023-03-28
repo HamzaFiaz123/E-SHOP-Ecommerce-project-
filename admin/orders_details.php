@@ -38,7 +38,7 @@ include "../functions.php";
                             </div>
                         </div>
                         <div class=" m-auto" style="max-width:950%;">
-                            <form method="POST" action="" enctype="multipart/form-data">
+                           
                                 <table class="table table-bordered">
                                     <thead class="table-dark">
                                         <tr>
@@ -55,6 +55,11 @@ include "../functions.php";
                                         <?php
                                         if (isset($_GET['order_id'])) {
                                             $order_id = $_GET['order_id'];
+                                        }
+                                        $sql_pro_show1 = "SELECT * FROM customer_orders where id='$order_id'";
+                                        $result1 = mysqli_query($conn, $sql_pro_show1);
+                                        while($row1=mysqli_fetch_array($result1)){
+                                            $payment_status = $row1['payment_status'];
                                         }
                                         $sql_pro_show = "SELECT * FROM orders_details where order_id='$order_id'";
                                         $result = mysqli_query($conn, $sql_pro_show);
@@ -90,25 +95,27 @@ include "../functions.php";
                                         </td>
                                       
                                         <td>
-                                            <p>' . ' ' . '</p>
+                                         <p>' . $Payment_Mode . '</p>
                                         </td>
-                                        <td>
-                                            
-                                            <a href="change_order_status.php?order_id=' . $order_id . '" name="change_order_status" class="btn btn-info">Change Details</a>
-                                        </td>
+                                        <form method="POST">
+                                            <td>
+                                                <a href="#?order_id=' . $order_id . '" name="change_order_status" class="btn btn-info">Change Details</a>
+                                            </td>
+                                        </form>
                                         <td>
                                             <p>' . $qty . '</p>
                                         </td>
                                     </tr>';
                                         }
-                                        if (isset($_POST['change_order_status'])) {
-                                            echo "sfdsgf";
+                                        if(isset($_POST['change_order_status'])){
+                                            echo "idj";
                                         }
+
                                         ?>
 
                                     </tbody>
                                 </table>
-                            </form>
+                            
                             <div class="row column_title">
                                 <div class="col-md-12">
                                     <div class="page_title">
