@@ -42,21 +42,23 @@
                                     <th>Order Date</th>
                                     <th>Payment Status</th>
                                     <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $customer_id = $_SESSION['id'];
-                                $sql_pro_show = "SELECT * FROM customer_orders where customer_id='$customer_id'";
+                                $sql_pro_show = "SELECT * FROM customers_orders where customer_id='$customer_id'";
                                 $result = mysqli_query($conn, $sql_pro_show);
                                 $count = mysqli_num_rows($result);
                                 if($count > 0) {
                                     while ($row = mysqli_fetch_array($result)) {
                                         $id = $row['id'];
-                                        $due_amount = $row['due_amount'];
+                                        $due_amount = $row['total_amount'];
                                         $invoice_number = $row['invoice_number'];
-                                        $date = $row['order_date'];
+                                        $date = $row['placed_on'];
                                         $status = $row['payment_status'];
+                                        $order_status = $row['order_status'];
                                         if($status=='unpaid'){
                                             $status = 'Unpaid';
                                         }
@@ -80,6 +82,9 @@
                                 <td>
                                     <p>' . $status . '</p>
                                 </td>
+                                <td>
+                                <p>' . $order_status . '</p>
+                                  </td>
                                 <td>
                                     <a href="confirm_order.php?order_id='.$id.'" class="btn btn-success">Confirm if paid</a>
                                 </td>

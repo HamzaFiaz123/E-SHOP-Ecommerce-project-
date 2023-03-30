@@ -401,6 +401,62 @@ function add_products()
     }
 }
 
+function order_placement()
+{
+    if (isset($_POST['place-order-btn'])) {
+        include "config/db.php";
+        $ip = getIPAddress();
+        $cus_id = $_SESSION['id'];
+        $payment_method = $_POST['payment_method'];
+        $invoice = mt_rand(1, 10000);
+        $order_status = "pending";
+        $due_amount = $_SESSION['due_amount'];
+        $payment_status = "unpaid";
+        $cart_check = "SELECT * FROM cart where ip_add='$ip'";
+        $query_result = mysqli_query($conn, $cart_check);
+        $sql = "INSERT INTO customers_orders (invoice_number, total_amount, placed_on, selected_payment_mode, customer_id, order_status, payment_status) VALUES('$invoice','$due_amount', Now(), '$payment_method', '$cus_id', '$order_status', '$payment_status')";
+        $result = mysqli_query($conn, $sql);
+        $order_id = mysqli_insert_id($conn);
+        if ($result) {
+            while ($row = mysqli_fetch_array($query_result)) {
+                $pro_id = $row['product_id'];
+                $qty = $row['qty'];
+                $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
+                $result2 = mysqli_query($conn, $sql_pro_show);
+                while ($row2 = mysqli_fetch_array($result2)) {
+                    $pro_id = $row2['id'];
+                    $pro_price = $row2['prod_price'];
+                    $stock = $row2['Reamaining_stock'] - $qty;
+                    $update_stock_query = "UPDATE products SET Reamaining_stock='$stock' WHERE id='$pro_id'";
+                    $resul = mysqli_query($conn, $update_stock_query);
+                    $sql2 = "INSERT INTO orders_details(order_id,inovoice_num, product_id, qty,poduct_price) VALUES( $order_id,'$invoice','$pro_id','$qty','$pro_price')";
+                    $result3 = mysqli_query($conn, $sql2);
+                }
+            }
+            $delte_cart = "delete from cart where ip_add='$ip'";
+            $result_delete = mysqli_query($conn, $delte_cart);
+            echo "
+            <script>swal('Order Placed!', 'Your order placed successfully ', 'success');</script>
+        ";
+        } else {
+            echo "
+            <script>swal('Order not placed!', 'Please try again', 'error');</script>
+        ";
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
+
+
+}
+function cart_count()
+{
+    include "config/db.php";
+    $sql_pro_show = "SELECT * FROM customer_orders";
+    $result = mysqli_query($conn, $sql_pro_show);
+    $count = mysqli_num_rows($result);
+    echo "<p style='font-size:20px;color:brown;margin-left:-11px;    display: inline-block;'>$count</p>";
+}
+
 function orders_count()
 {
     include "config/db.php";
@@ -517,7 +573,7 @@ function confirm_payment()
         $insert_payment = "insert into payments(order_id,inovoice_num, amount, payment_mode, reference_no, code, payment_date)values('$order_id','$invoice_num','$amount','$payment_mode','$reference_code','$bank_code','$payment_date')";
         $run_query = mysqli_query($conn, $insert_payment);
         if ($run_query) {
-            $update_query = "UPDATE customer_orders SET payment_status='Paid' WHERE id='$order_id'";
+            $update_query = "UPDATE customers_orders SET payment_status='Paid' WHERE id='$order_id'";
             $run_query2 = mysqli_query($conn, $update_query);
             echo '<div class="alert alert-info">Thanks for payment, your order will be completed within 24 hours</div>';
         } else {    

@@ -4,90 +4,97 @@ include "../functions.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-   <head>
+
+<head>
    <?php
-      include("partials/links.php");
-     ?>
-   </head>
-   <body class="dashboard dashboard_1">
-      <div class="full_container">
-         <div class="inner_container">
-            <!-- Sidebar  -->
+   include("partials/links.php");
+   ?>
+</head>
+
+<body class="dashboard dashboard_1">
+   <div class="full_container">
+      <div class="inner_container">
+         <!-- Sidebar  -->
+         <?php
+         include("partials/left_header.php");
+         ?>
+         <!-- end sidebar -->
+         <!-- right content -->
+         <div id="content">
+            <!-- topbar -->
             <?php
-               include("partials/left_header.php");
+            include("partials/right_header.php");
             ?>
-            <!-- end sidebar -->
-            <!-- right content -->
-            <div id="content">
-               <!-- topbar -->
-               <?php
-               include("partials/right_header.php");
-                ?>
-               <!-- end topbar -->
-               <!-- dashboard inner -->
-               <div class="midde_cont">
-                  <div class="container-fluid">
-                     <div class="row column_title">
-                        <div class="col-md-12">
-                           <div class="page_title">
-                              <h2>Todays Orders</h2>
-                           </div>
+            <!-- end topbar -->
+            <!-- dashboard inner -->
+            <div class="midde_cont">
+               <div class="container-fluid">
+                  <div class="row column_title">
+                     <div class="col-md-12">
+                        <div class="page_title">
+                           <h2>Todays Orders</h2>
                         </div>
                      </div>
-                     <div class=" m-auto" style="max-width:950%;">
+                  </div>
+                  <div class=" m-auto" style="max-width:950%;">
                      <form method="POST" action="" enctype="multipart/form-data">
                         <table class="table table-bordered">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Invoice_number</th>
-                                    <th>Amount Due</th>
-                                    <th>Payment status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $date = date('y-m-d');
-                               $sql_pro_show = "SELECT * FROM customer_orders where order_date like '%$date%'";
-                                $result = mysqli_query($conn, $sql_pro_show);
-                                while ($row = mysqli_fetch_array($result)) {
-                                    $order_id = $row['id'];
-                                    $due_amount = $row['due_amount'];
-                                    $invoice_number = $row['invoice_number'];
-                                    $payment_status = $row['payment_status'];
+                           <thead class="table-dark">
+                              <tr>
+                                 <th>Id</th>
+                                 <th>Invoice_number</th>
+                                 <th>Amount Due</th>
+                                 <th>Payment status</th>
+                                 <th>status</th>
+                                 <th>Actions</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <?php
+                              $date = date('y-m-d');
+                              $sql_pro_show = "SELECT * FROM customers_orders where placed_on like '%$date%'";
+                              $result = mysqli_query($conn, $sql_pro_show);
+                              while ($row = mysqli_fetch_array($result)) {
+                                 $order_id = $row['id'];
+                                 $due_amount = $row['total_amount'];
+                                 $invoice_number = $row['invoice_number'];
+                                 $payment_status = $row['payment_status'];
+                                 $status = $row['order_status'];
 
-                                    echo '<tr>
-                            <td>
-                                <p>' . $order_id . '</p>
-                            </td>
-                            <td>
-                                <p>' . $invoice_number . '</p>
-                            </td>
-                            <td>
-                                <p>' . $due_amount . '$</p>
-                            </td>
-                            <td>
-                                <p>' . $payment_status . '</p>
-                            </td>
-                            <td>
-                                <a href="orders_details.php?order_id='.$order_id.'" class="btn btn-success">View Details</a>
-                            </td>
-                        </tr>';
-                                }
+                                 echo '<tr>
+                                 <td>
+                                    <p>' . $order_id . '</p>
+                                 </td>
+                                 <td>
+                                    <p>' . $invoice_number . '</p>
+                                 </td>
+                                 <td>
+                                    <p>' . $due_amount . '$</p>
+                                 </td>
+                                 <td>
+                                    <p>' . $payment_status . '</p>
+                                 </td>
+                                 <td>
+                                    <p>' . $status . '</p>
+                                 </td>
+                                 <td>
+                                    <a href="orders_details.php?order_id=' . $order_id . '" class="btn btn-primary">View Details</a>
+                                 </td>
+                              </tr>';
+                              }
 
-                                ?>
+                              ?>
 
-                            </tbody>
+                           </tbody>
                         </table>
-                    </form>
-                </div>
-                     
+                     </form>
+                  </div>
+
                   <!-- footer -->
                   <div class="container-fluid">
-                  <?php
-      include("partials/footer.php");
-     ?>
+                     <?php
+                     include("partials/footer.php");
+                     ?>
                   </div>
                </div>
                <!-- end dashboard inner -->
@@ -103,7 +110,7 @@ include "../functions.php";
       <!-- select country -->
       <script src="js/bootstrap-select.js"></script>
       <!-- owl carousel -->
-      <script src="js/owl.carousel.js"></script> 
+      <script src="js/owl.carousel.js"></script>
       <!-- chart js -->
       <script src="js/Chart.min.js"></script>
       <script src="js/Chart.bundle.min.js"></script>
@@ -117,5 +124,6 @@ include "../functions.php";
       <!-- custom js -->
       <script src="js/custom.js"></script>
       <script src="js/chart_custom_style1.js"></script>
-   </body>
+</body>
+
 </html>

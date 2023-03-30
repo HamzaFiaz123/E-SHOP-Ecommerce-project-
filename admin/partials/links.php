@@ -23,6 +23,9 @@
       <link rel="stylesheet" href="css/bootstrap-select.css" />
       <!-- scrollbar css -->
       <link rel="stylesheet" href="css/perfect-scrollbar.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+      <script src= "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js">
+      </script>
       <!-- custom css -->
       <link rel="stylesheet" href="css/custom.css" />
       <!--[if lt IE 9]>

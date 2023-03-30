@@ -134,11 +134,11 @@ include("../functions.php");
                             </thead>
                             <tbody>
                                 <?php
-                                $sql_pro_show = "SELECT * FROM customer_orders";
+                                $sql_pro_show = "SELECT * FROM customers_orders where order_status='pending'";
                                 $result = mysqli_query($conn, $sql_pro_show);
                                 while ($row = mysqli_fetch_array($result)) {
                                     $order_id = $row['id'];
-                                    $due_amount = $row['due_amount'];
+                                    $due_amount = $row['total_amount'];
                                     $invoice_number = $row['invoice_number'];
                                     $status = $row['payment_status'];
                                     $order_status = $row['order_status'];

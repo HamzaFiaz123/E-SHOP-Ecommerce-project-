@@ -33,53 +33,54 @@ include "../functions.php";
                             <div class="col-md-12">
                                 <div class="page_title">
                                     <h2>Order Details</h2>
-                                    
+
                                 </div>
                             </div>
                         </div>
                         <div class=" m-auto" style="max-width:950%;">
-                           
-                                <table class="table table-bordered">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Invoice number</th>
-                                            <th>Customer name</th>
-                                            <th>Payment Mode</th>
-                                            <th>Payment status</th>
-                                            <th>Order status</th>
-                                            <th>Quantity</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        if (isset($_GET['order_id'])) {
-                                            $order_id = $_GET['order_id'];
-                                        }
-                                        $sql_pro_show1 = "SELECT * FROM customer_orders where id='$order_id'";
-                                        $result1 = mysqli_query($conn, $sql_pro_show1);
-                                        while($row1=mysqli_fetch_array($result1)){
-                                            $payment_status = $row1['payment_status'];
-                                        }
-                                        $sql_pro_show = "SELECT * FROM orders_details where order_id='$order_id'";
-                                        $result = mysqli_query($conn, $sql_pro_show);
-                                        while ($row = mysqli_fetch_array($result)) {
-                                            $order_id = $row['id'];
-                                            // $due_amount = $row['due_amount'];
-                                            $invoice_number = $row['inovoice_num'];
 
-                                            // $order_date = $row['order_date'];
-                                            $Payment_Mode = $row['selected_payment_mode'];
-                                            $cus_id = $row['customer_id'];
-                                            $pro_id = $row['product_id'];
-                                            $qty = $row['qty'];
-                                            $select_customer = "SELECT * FROM customer_account where id='$cus_id'";
-                                            $result_query = mysqli_query($conn, $select_customer);
-                                            while ($row = mysqli_fetch_array($result_query)) {
-                                                $cus_id = $row['id'];
-                                                $customer_name = $row['customer_name'];
-                                            }
-                                            echo '<tr>
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Invoice number</th>
+                                        <th>Customer name</th>
+                                        <th>Payment Mode</th>
+                                        <th>Payment status</th>
+                                        <th>Order status</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if (isset($_GET['order_id'])) {
+                                        $order_id = $_GET['order_id'];
+                                    }
+                                    $sql_pro_show1 = "SELECT * FROM customers_orders where id='$order_id'";
+                                    $result1 = mysqli_query($conn, $sql_pro_show1);
+                                    while ($row = mysqli_fetch_array($result1)) {
+                                        $payment_status = $row['payment_status'];
+                                        $order_status = $row['order_status'];
+                                        $order_id2 = $row['id'];
+                                        $due_amount = $row['total_amount'];
+                                        $invoice_number = $row['invoice_number'];
+                                        $order_date = $row['placed_on'];
+                                        $Payment_Mode = $row['selected_payment_mode'];
+                                        $cus_id = $row['customer_id'];
+                                    }
+                                    $sql_pro_show1 = "SELECT * FROM orders_details where order_id='$order_id'";
+                                    $result1 = mysqli_query($conn, $sql_pro_show1);
+                                    while ($row = mysqli_fetch_array($result1)) {
+                                        $pro_id = $row['product_id'];
+                                        $qty = $row['qty'];
+                                    }
+                                    $select_customer = "SELECT * FROM customer_account where id='$cus_id'";
+                                    $result_query = mysqli_query($conn, $select_customer);
+                                    while ($row = mysqli_fetch_array($result_query)) {
+                                        $cus_id = $row['id'];
+                                        $customer_name = $row['customer_name'];
+                                    }
+                                    echo '<tr>
                                         <td>
                                             <p>' . $order_id . '</p>
                                         </td>
@@ -95,27 +96,23 @@ include "../functions.php";
                                         </td>
                                       
                                         <td>
-                                         <p>' . $Payment_Mode . '</p>
+                                         <p>' . $payment_status . '</p>
                                         </td>
                                         <form method="POST">
                                             <td>
-                                                <a href="#?order_id=' . $order_id . '" name="change_order_status" class="btn btn-info">Change Details</a>
+                                            <p>' . $order_status . '</p>
+                                                <a href="change_order_status.php?order_id=' . $order_id . '" class="btn btn-info">Change Status</a>
                                             </td>
                                         </form>
                                         <td>
                                             <p>' . $qty . '</p>
                                         </td>
                                     </tr>';
-                                        }
-                                        if(isset($_POST['change_order_status'])){
-                                            echo "idj";
-                                        }
+                                ?>
 
-                                        ?>
+                                </tbody>
+                            </table>
 
-                                    </tbody>
-                                </table>
-                            
                             <div class="row column_title">
                                 <div class="col-md-12">
                                     <div class="page_title">
@@ -139,7 +136,7 @@ include "../functions.php";
                                         if (isset($_GET['order_id'])) {
                                             $order_id = $_GET['order_id'];
                                         }
-                                       $sql_pro_show2 = "SELECT * FROM orders_details where order_id='$order_id'";
+                                        $sql_pro_show2 = "SELECT * FROM orders_details where order_id='$order_id'";
                                         $result2 = mysqli_query($conn, $sql_pro_show2);
                                         while ($row2 = mysqli_fetch_array($result2)) {
                                             $pro_id = $row2['product_id'];

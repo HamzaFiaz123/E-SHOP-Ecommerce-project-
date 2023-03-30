@@ -44,18 +44,20 @@ include "../functions.php";
                                     <th>Invoice_number</th>
                                     <th>Amount Due</th>
                                     <th>Payment status</th>
+                                    <th>Placed On</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql_pro_show = "SELECT * FROM customer_orders";
+                                $sql_pro_show = "SELECT * FROM customers_orders";
                                 $result = mysqli_query($conn, $sql_pro_show);
                                 while ($row = mysqli_fetch_array($result)) {
                                     $order_id = $row['id'];
-                                    $due_amount = $row['due_amount'];
+                                    $due_amount = $row['total_amount'];
                                     $invoice_number = $row['invoice_number'];
                                     $status = $row['payment_status'];
+                                    $placed_on = $row['placed_on'];
 
                                     echo '<tr>
                             <td>
@@ -71,7 +73,10 @@ include "../functions.php";
                                 <p>' . $status . '</p>
                             </td>
                             <td>
-                                <a href="orders_details.php?order_id='.$order_id.'" class="btn btn-success">View Details</a>
+                                <p>' . $placed_on . '</p>
+                            </td>
+                            <td>
+                                <a href="orders_details.php?order_id='.$order_id.'" class="btn btn-primary">View Details</a>
                             </td>
                         </tr>';
                                 }

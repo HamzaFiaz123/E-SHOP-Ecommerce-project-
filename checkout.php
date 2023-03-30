@@ -170,49 +170,7 @@ if (!isset($_SESSION['email'])) {
             </form>
 
             <?php
-            if (isset($_POST['place-order-btn'])) {
-                $ip = getIPAddress();
-                $cus_id = $_SESSION['id'];
-                $payment_method = $_POST['payment_method'];
-                $invoice = mt_rand(1, 10000);
-                $order_status = "pending";
-                $payment_status = "unpaid";
-                $cart_check = "SELECT * FROM cart where ip_add='$ip_add'";
-                $query_result = mysqli_query($conn, $cart_check);
-                $sql = "INSERT INTO `customer_orders`(customer_id,due_amount, invoice_number, order_date, payment_status, order_status) VALUES('$cus_id','$due_amount', '$invoice',Now(),'$payment_status', '$order_status')";
-                $result = mysqli_query($conn, $sql);
-                $order_id = mysqli_insert_id($conn);
-                if ($result) {
-
-                    while ($row = mysqli_fetch_array($query_result)) {
-                        $pro_id = $row['product_id'];
-                        $qty = $row['qty'];
-                        $sql_pro_show = "SELECT * FROM products where id = '$pro_id'";
-                        $result2 = mysqli_query($conn, $sql_pro_show);
-                        while ($row2 = mysqli_fetch_array($result2)) {
-                            $pro_id = $row2['id'];
-                            $pro_price = $row2['prod_price'];
-                            $stock = $row2['Reamaining_stock'] - $qty;
-                            $update_stock_query = "UPDATE products SET Reamaining_stock='$stock' WHERE id='$pro_id'";
-                            $resul = mysqli_query($conn, $update_stock_query);
-                           $sql2 = "INSERT INTO `orders_details`(order_id,inovoice_num,customer_id, selected_payment_mode, product_id, qty,poduct_price) VALUES( $order_id,'$invoice','$cus_id','$payment_method','$pro_id','$qty','$pro_price')";
-                            $result3 = mysqli_query($conn, $sql2);
-                        }
-                    }
-                    $delte_cart = "delete from cart where ip_add='$ip'";
-                    $result_delete = mysqli_query($conn, $delte_cart);
-                    echo "
-                    <script>swal('Order Placed!', 'Your order placed successfully ', 'success');</script>
-                ";
-                } else {
-                    echo "
-                    <script>swal('Order not placed!', 'Please try again', 'error');</script>
-                ";
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                }
-            }
-
-
+                order_placement();
             ?>
         </div>
     </div>

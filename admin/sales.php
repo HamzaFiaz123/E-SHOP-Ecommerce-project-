@@ -36,8 +36,11 @@ include "../functions.php";
                                 </div>
                             </div>
                         </div>
-                        <div class=" m-auto" style="max-width:950%;">
-
+                        <div class="special_fn_buttons mt-2 mb-4">
+                            <button id="pdfButton" class="btn btn-primary  ">Generate PDF</button>
+                            <button onclick="window.print()" class="btn btn-primary ml-3">Print</button>
+                        </div>
+                        <div class=" m-auto" style="max-width:950%;" id="generatePdf">
                             <h4 style="float: left;">E-SHOP Sales Report</h4>
                             <h4 style="float: right;">Date : <?php echo $date = date("d-m-y"); ?></h4>
                             <table class="table table-bordered mt-4">
@@ -104,6 +107,20 @@ include "../functions.php";
                 </div>
             </div>
         </div>
+        <script>
+            var button = document.getElementById("pdfButton");
+                button.addEventListener("click", function () {
+                var doc = new jsPDF("p", "mm", [300, 300]);
+                var makePDF = document.querySelector("#generatePdf");
+                // fromHTML Method
+                doc.fromHTML(makePDF);
+                doc.save("output.pdf");
+            });
+            function printWindow(){
+                window.print();
+            }
+
+   </script>
         <!-- jQuery -->
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.min.js"></script>

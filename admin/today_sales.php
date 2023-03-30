@@ -59,50 +59,47 @@ include "../functions.php";
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $total_sale=0;
-                                    $select_query = "select * from products";
-                                    $query_result = mysqli_query($conn, $select_query);
-                                    $count = mysqli_num_rows($query_result);
-                                    while ($row = mysqli_fetch_array($query_result)) {
-                                        $id = $row['id'];
-                                        $prod_name = $row['prod_name'];
-                                        $prod_price = $row['prod_price'];
-                                        $added_stock = $row['Stock_added'];
-                                        $current_stock = $row['Reamaining_stock'];
-                                        $product_sale = $added_stock - $current_stock;
-                                        $pro_sale_price = $product_sale * $prod_price;
-                                        $total_sale = $total_sale + ($product_sale * $prod_price);
-                                        $date = date('y-m-d');
-                                        $Query_select = "SELECT * from customer_orders WHERE order_date Like '%$date%'";
-                                        $query_results = mysqli_query($conn, $Query_select);
-                                        if ($query_results) {
-                                           $Query_select2 = "SELECT * from orders_details WHERE  product_id='$id'";
-                                            $query_results2 = mysqli_query($conn, $Query_select);
-                                            $count = mysqli_num_rows($query_results2);
-                                            while ($row2 = mysqli_fetch_array($query_results2)) {
+                                    $total_sale = 0;
+                                    $date = date('y-m-d');
+                                    $Query_select = "SELECT * from customers_orders WHERE placed_on Like '%$date%'";
+                                    $query_results = mysqli_query($conn, $Query_select);
+                                    while ($row = mysqli_fetch_array($query_results)) {
+                                        $order_id = $row['id'];
+                                        $Query_select2 = "SELECT * from orders_details WHERE  order_id='$order_id'";
+                                        $query_results2 = mysqli_query($conn, $Query_select2);
+                                        while ($row2 = mysqli_fetch_array($query_results2)) {
+                                            $pro_id = $row2['product_id'];
+                                            $qty = $row2['qty'];
+                                            $select_query = "select * from products where id='$pro_id'";
+                                            $query_result = mysqli_query($conn, $select_query);
+                                            $count = mysqli_num_rows($query_result);
+                                            while ($row3 = mysqli_fetch_array($query_result)) {
+                                                $id = $row3['id'];
+                                                $prod_name = $row3['prod_name'];
+                                                $prod_price = $row3['prod_price'];
+                                                $added_stock = $row3['Stock_added'];
+                                                $current_stock = $row3['Reamaining_stock'];
+                                                $pro_sale_price = $qty * $prod_price;
+                                                $total_sale = $total_sale + $pro_sale_price;
                                                 echo " <tr>
-                                                        <td>$id</td>
-                                                        <td>$prod_name</td>
-                                                        <td>$product_sale</td>
-                                                        <td>$pro_sale_price PKR</td>
-                                                    </tr>";
+                                                     <td>$id</td>
+                                                     <td>$prod_name</td> 
+                                                     <td>$qty</td> 
+                                                     <td>$pro_sale_price PKR</td>
+                                                 </tr>";
                                             }
-                                        } else {
-                                            echo "<h4 class='text-danger'>Nothing is sale today</h4>";
                                         }
                                     }
 
-
                                     ?>
-                                   <tr>
+                                    <tr>
                                         <td colspan="5" style="text-align:right;">
                                             <?php
-                                                    if($count > 0){
-                                                        echo "$total_sale PKR";
-                                                    }
-                                                    else{
-                                                        echo " ";
-                                                    }
+                                            if ($count > 0) {
+                                                echo "$total_sale PKR";
+                                            } else {
+                                                echo " ";
+                                            }
                                             ?>
                                         </td>
 

@@ -17,6 +17,12 @@ h6 {
 p {
     margin-bottom: 0px;
 }
+.special_fn_buttons{
+    margin: 15px 0px;
+}
+.special_fn_buttons button{
+    margin-right: 15px;
+}
 
 .head_hero_section {
     background-image: url(../images/slide1.jpg);
