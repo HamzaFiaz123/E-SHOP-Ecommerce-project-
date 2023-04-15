@@ -83,16 +83,11 @@ include "../functions.php";
 
 
                                     ?>
-                                    <tr>
-                                        <td colspan="5" style="text-align:right;">
-                                            <?php
-                                                echo "$total_sale PKR";
-                                            ?>
-                                        </td>
-
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
+
+                            <h4 class="text-right">Net Sale : <?php echo $total_sale ?> Pkr</h4>
 
                         </div>
 

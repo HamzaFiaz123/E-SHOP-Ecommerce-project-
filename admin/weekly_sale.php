@@ -91,22 +91,9 @@ include "../functions.php";
                                     }
 
                                     ?>
-                                    
-                                    <tr>
-                                        <td colspan="5" style="text-align:right;">
-                                        <?php
-                                                    if($count > 0){
-                                                        echo "$total_sale PKR";
-                                                    }
-                                                    else{
-                                                        echo " ";
-                                                    }
-                                            ?>
-                                        </td>
-
-                                    </tr>
                                 </tbody>
                             </table>
+                            <h4 class="text-right">Net Sale : <?php echo $total_sale ?> Pkr</h4>
                         </div>
 
                         <!-- footer -->
