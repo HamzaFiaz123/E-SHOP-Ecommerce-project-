@@ -141,12 +141,8 @@ if (isset($_POST['decrease_qty_btn'])) {
                 <div class="form-group d-flex">
                     <label for="">Subtotal</label>
                     <p class="ml-auto">
-                        <?php
-                        if(!isset($_SESSION['email'])){
-                            echo "0$";
-                        }else{
-                         echo $_SESSION['amount_due'];
-                        }
+                        <?php                                            
+                         echo $_SESSION['amount_due']."$";                        
                         ?>
                     </p>
                 </div>
@@ -160,13 +156,8 @@ if (isset($_POST['decrease_qty_btn'])) {
                         Total
                     </h4>
                     <p class="ml-auto">
-                        <?php
-                        if(!isset($_SESSION['email'])){
-                            echo "0$";
-                        }else{
-                         echo $_SESSION['amount_due'];
-                        }
-
+                    <?php                                            
+                         echo $_SESSION['amount_due']."$";                        
                         ?>
                     </p>
                 </div>

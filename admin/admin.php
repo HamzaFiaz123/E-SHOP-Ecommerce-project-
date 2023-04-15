@@ -94,7 +94,7 @@ include("../functions.php");
 
                                  <p class="head_couter" style="font-size:23px ;">Orders</p>
                                  <?php
-                                 orders_count_for_admin();
+                                  general_orders_count_for_admin();
                                  ?>
                               </div>
                            </div>
@@ -111,7 +111,7 @@ include("../functions.php");
                            <div class="counter_no">
                               <div>
                                  <p class="total_no">54</p>
-                                 <p class="head_couter">Orders</p>
+                                 <p class="head_couter">Reviews</p>
                               </div>
                            </div>
                         </div>

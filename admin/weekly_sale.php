@@ -36,6 +36,10 @@ include "../functions.php";
                                 </div>
                             </div>
                         </div>
+                        <div class="special_fn_buttons mt-2 mb-4">
+                            <button id="pdfButton" class="btn btn-primary  ">Generate PDF</button>
+                            <button onclick="window.print()" class="btn btn-primary ml-3">Print</button>
+                        </div>
                         <div class=" m-auto" style="max-width:950%;">
                             <div class="d-flex justify-content-between text-center">
                                 <h4 style="float: left;">E-SHOP Weekly Sales Report</h4>
@@ -93,7 +97,7 @@ include "../functions.php";
                                     ?>
                                 </tbody>
                             </table>
-                            <h4 class="text-right">Net Sale : <?php echo $total_sale ?> Pkr</h4>
+                            <h4 class="text-right">Weekly Sale : <?php echo $total_sale ?> Pkr</h4>
                         </div>
 
                         <!-- footer -->
@@ -107,6 +111,20 @@ include "../functions.php";
                 </div>
             </div>
         </div>
+        <script>
+            var button = document.getElementById("pdfButton");
+                button.addEventListener("click", function () {
+                var doc = new jsPDF("p", "mm", [300, 300]);
+                var makePDF = document.querySelector("#generatePdf");
+                // fromHTML Method
+                doc.fromHTML(makePDF);
+                doc.save("output.pdf");
+            });
+            function printWindow(){
+                window.print();
+            }
+
+   </script>
         <!-- jQuery -->
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.min.js"></script>

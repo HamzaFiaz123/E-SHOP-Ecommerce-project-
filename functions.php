@@ -468,10 +468,24 @@ function orders_count()
 function orders_count_for_admin()
 {
     include "config/db.php";
-    $sql_pro_show = "SELECT * FROM customer_orders where order_status='Pending'";
+    $sql_pro_show = "SELECT * FROM customers_orders where order_status='Pending'";
     $result = mysqli_query($conn, $sql_pro_show);
     $count = mysqli_num_rows($result);
     echo "<p class='total_no'>$count</p>";
+}
+
+function general_orders_count_for_admin()
+{
+    include "config/db.php";
+    $sql_pro_show = "SELECT * FROM customers_orders ";
+    $result = mysqli_query($conn, $sql_pro_show);
+    $count = mysqli_num_rows($result);
+    if($count<1){
+        echo "<p class='total_no'>0</p>";
+    }
+    else{
+        echo "<p class='total_no'>$count</p>";
+    }
 }
 
 

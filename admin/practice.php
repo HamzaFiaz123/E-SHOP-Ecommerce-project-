@@ -32,7 +32,7 @@ include "../functions.php";
                         <div class="row column_title">
                             <div class="col-md-12">
                                 <div class="page_title">
-                                    <h2>Today Sale</h2>
+                                    <h2>Net Sales Report Details</h2>
                                 </div>
                             </div>
                         </div>
@@ -40,65 +40,77 @@ include "../functions.php";
                             <button id="pdfButton" class="btn btn-primary  ">Generate PDF</button>
                             <button onclick="window.print()" class="btn btn-primary ml-3">Print</button>
                         </div>
-                        <div class=" m-auto" style="max-width:950%;">
-                            <?php
-                            // $today = date("Y-m-d");
-                            // $sale_query = "SELECT sum(amount) AS total_sale FROM payments where payment_date='$today'";
-                            // $run_query = mysqli_query($conn, $sale_query);
-                            // $row = mysqli_fetch_assoc($run_query);
-                            // $totalSale = $row['total_sale'];
-                            // echo "Total sale: $" . number_format($totalSale, 2);
-                            ?>
-
-                            <h4 style="float: left;">E-SHOP Todays Sales Report</h4>
+                        <div class="therapist_menu">
+                            <ul>
+                                <li>
+                                    <a href="index.php">Home</a>
+                                </li>
+                                <li>
+                                    <a href="index.php">Shop</a>
+                                </li>
+                                <li>
+                                    <a href="index.php">products</a>
+                                </li>
+                                <li>
+                                    <a href="index.php">About Us</a>
+                                </li>
+                                <li>
+                                    <a href="index.php">Contact us</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <?php
+            
+                        ?>
+                        <div class=" m-auto" style="max-width:950%;" id="generatePdf">
+                            <h4 style="float: left;">E-SHOP Sales Report</h4>
                             <h4 style="float: right;">Date : <?php echo $date = date("d-m-y"); ?></h4>
                             <table class="table table-bordered mt-4">
                                 <thead class="table-dark">
                                     <tr>
                                         <td>Id</td>
                                         <td>Product</td>
+                                        <td>Price</td>
                                         <td>Total Sold</td>
                                         <td>Sale</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $total_sale = 0;
-                                    $date = date('y-m-d');
-                                    $Query_select = "SELECT * from customers_orders WHERE placed_on Like '%$date%'";
-                                    $query_results = mysqli_query($conn, $Query_select);
-                                    while ($row = mysqli_fetch_array($query_results)) {
-                                        $order_id = $row['id'];
-                                        $Query_select2 = "SELECT * from orders_details WHERE  order_id='$order_id'";
-                                        $query_results2 = mysqli_query($conn, $Query_select2);
-                                        while ($row2 = mysqli_fetch_array($query_results2)) {
-                                            $pro_id = $row2['product_id'];
-                                            $qty = $row2['qty'];
-                                            $select_query = "select * from products where id='$pro_id'";
-                                            $query_result = mysqli_query($conn, $select_query);
-                                            $count = mysqli_num_rows($query_result);
-                                            while ($row3 = mysqli_fetch_array($query_result)) {
-                                                $id = $row3['id'];
-                                                $prod_name = $row3['prod_name'];
-                                                $prod_price = $row3['prod_price'];
-                                                $added_stock = $row3['Stock_added'];
-                                                $current_stock = $row3['Reamaining_stock'];
-                                                $pro_sale_price = $qty * $prod_price;
-                                                $total_sale = $total_sale + $pro_sale_price;
-                                                echo " <tr>
-                                                     <td>$id</td>
-                                                     <td>$prod_name</td> 
-                                                     <td>$qty</td> 
-                                                     <td>$pro_sale_price PKR</td>
-                                                 </tr>";
-                                            }
+                                    $total_sale=0;
+                                    $select_query = "select * from products";
+                                    $query_result = mysqli_query($conn, $select_query);
+                                    $count = mysqli_num_rows($query_result);
+                                    while ($row = mysqli_fetch_array($query_result)) {
+                                        $id = $row['id'];
+                                        $prod_name = $row['prod_name'];
+                                        $prod_price = $row['prod_price'];
+                                        $added_stock = $row['Stock_added'];
+                                        $current_stock = $row['Reamaining_stock'];
+                                        $product_sale = $added_stock - $current_stock;
+                                        $pro_sale_price = $product_sale * $prod_price;
+                                        $total_sale = $total_sale + ($product_sale * $prod_price);
+                                        $Query_select = "SELECT * from orders_details WHERE product_id='$id'";
+                                        $query_results = mysqli_query($conn, $Query_select);
+                                        if ($query_results) {
+                                            echo " <tr>
+                                                        <td>$id</td>
+                                                        <td>$prod_name</td>
+                                                        <td>$prod_price</td>
+                                                        <td>$product_sale</td>
+                                                        <td>$pro_sale_price PKR</td>
+                                                    </tr>";
                                         }
                                     }
 
+
                                     ?>
+                                    
                                 </tbody>
                             </table>
-                            <h4 class="text-right">Todays Sale : <?php echo $total_sale ?> Pkr</h4>
+
+                            <h4 class="text-right">Net Sale : <?php echo $total_sale ?> Pkr</h4>
+
                         </div>
 
                         <!-- footer -->

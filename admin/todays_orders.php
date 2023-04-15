@@ -36,6 +36,10 @@ include "../functions.php";
                         </div>
                      </div>
                   </div>
+                  <div class="special_fn_buttons mt-2 mb-4">
+                            <button id="pdfButton" class="btn btn-primary  ">Generate PDF</button>
+                            <button onclick="window.print()" class="btn btn-primary ml-3">Print</button>
+                        </div>
                   <div class=" m-auto" style="max-width:950%;">
                      <form method="POST" action="" enctype="multipart/form-data">
                         <table class="table table-bordered">
@@ -101,6 +105,20 @@ include "../functions.php";
             </div>
          </div>
       </div>
+      <script>
+            var button = document.getElementById("pdfButton");
+                button.addEventListener("click", function () {
+                var doc = new jsPDF("p", "mm", [300, 300]);
+                var makePDF = document.querySelector("#generatePdf");
+                // fromHTML Method
+                doc.fromHTML(makePDF);
+                doc.save("output.pdf");
+            });
+            function printWindow(){
+                window.print();
+            }
+
+   </script>
       <!-- jQuery -->
       <script src="js/jquery.min.js"></script>
       <script src="js/popper.min.js"></script>
