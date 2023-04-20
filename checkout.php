@@ -13,7 +13,7 @@ if (!isset($_SESSION['email'])) {
 <div class="container">
     <div class="row">
         <div class="col-lg-7 border py-3 px-3">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <h2 class="text-primary mb-3">Billing Info</h2>
                 <div class="row">
                     <div class="col-lg-6">
@@ -27,7 +27,7 @@ if (!isset($_SESSION['email'])) {
                 </div>
                 <div class="my-3">
                     <label for="">Your Picture</label><br>
-                    <input type="file" class="cus_input_style w-75" placeholder="Select Your Picture" name="pro_image">
+                    <input type="file" name="cus_image" class="cus_input_style w-75" placeholder="Select Your Picture" name="cus_image">
                 </div>
                 <div class="form-group">
                     <label for="">Country</label>
@@ -51,15 +51,15 @@ if (!isset($_SESSION['email'])) {
                 if (isset($_POST['submit_customer_btn'])) {
                     $cus_id = $_SESSION['id'];
                     $cus_name = $_POST['cus_name'];
-                    $filename = $_FILES["pro_image"]["name"];
-                    $tempname = $_FILES["pro_image"]["tmp_name"];
-                    $folder = "../uploaded_images/" . $filename;
+                    $filename = $_FILES["cus_image"]["name"];
+                    $tempname = $_FILES["cus_image"]["tmp_name"];
+                    $folder = "uploaded_images/" . $filename;
                     $image_result = move_uploaded_file($tempname, $folder);
                     $cus_phone = $_POST['cus_phone'];
                     $cus_country = $_POST['cus_country'];
                     $cus_address = $_POST['cus_address'];
                     $postal_code = $_POST['postal_code'];
-                    $update_customer = "UPDATE customer_account SET customer_name='$cus_name',customer_phone='$cus_phone',customer_address='$cus_address',customer_country='$cus_country',postal_code='$postal_code',customer_image='$filename' WHERE id={$cus_id}";
+                    $update_customer = "UPDATE customer_account SET customer_name='$cus_name',customer_phone='$cus_phone',customer_address='$cus_address',customer_country='$cus_country',postal_code='$postal_code',customer_image='$filename' WHERE id='$cus_id'";
                     $customer_result = mysqli_query($conn, $update_customer);
                     if ($customer_result) {
                         echo "<div class='alert alert-success'>Successfully saved your information</div>";
@@ -151,8 +151,8 @@ if (!isset($_SESSION['email'])) {
                     </p>
                 </div>
                 <h5 class="mb-3">Payments Method</h5>
-                <select class="form-control form-group w-75" name="payment_method">
-                    <option>Please Select</option>
+                <label for="">Payment Options</label>
+                <select name="payment_method" class="form-control w-50" id="">
                     <?php
                     $sql_pro_show = "SELECT * FROM payments_methods";
                     $result = mysqli_query($conn, $sql_pro_show);
@@ -166,6 +166,7 @@ if (!isset($_SESSION['email'])) {
                     ?>
                 </select>
 
+                <a href="Offline_back_details.php" class="form-group">If you want to pay offline, then click here</a>
                 <button type="submit" name="place-order-btn" class="btn btn-dark">Place Order</button>
             </form>
 

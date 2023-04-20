@@ -47,7 +47,8 @@
                            <li><a href="orders.php">> <span>All Orders</span></a></li>
 
                         </ul>
-                     </li>                     
+                     </li>        
+                     <li><a href="customer_details.php"><i class="fa fa-table purple_color2"></i> <span>Customers</span></a></li>             
                      <li><a href="payments.php"><i class="fa fa-table purple_color2"></i> <span>Payments</span></a></li>
                      <li><a href="suppliers.php"><i class="fa fa-table purple_color2"></i> <span>Suppliers</span></a></li>
                      <li><a href="stock.php"><i class="fa fa-briefcase blue1_color"></i> <span>Stock</span></a></li>

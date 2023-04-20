@@ -50,11 +50,8 @@ include "../functions.php";
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                if(isset($_GET['cus_id'])){
-                                    $cus_id=$_GET['cus_id'];
-                                }
-                                $sql_pro_show = "SELECT * FROM customer_account where id='$cus_id'";
+                                <?php                                
+                                $sql_pro_show = "SELECT * FROM customer_account";
                                 $result = mysqli_query($conn, $sql_pro_show);
                                 while ($row = mysqli_fetch_array($result)) {
                                     $id = $row['id'];
@@ -70,7 +67,7 @@ include "../functions.php";
                                 <p>' . $id . '</p>
                             </td>
                             <td>
-                                <img src="../uploaded_images/' . $customer_image . '" alt="">
+                                <img src="../uploaded_images/' . $customer_image . '" class="img-fluid" alt="">
                             </td>
                             <td>
                                 <p>' . $customer_name . '</p>                               

@@ -36,5 +36,6 @@ include "functions.php";
         </tr>
     </tbody>
 </table>
+<a href="checkout.php">After paying offline, click here to place order</a>
 </div>
 

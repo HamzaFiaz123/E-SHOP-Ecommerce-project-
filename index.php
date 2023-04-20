@@ -68,7 +68,17 @@ include "functions.php";
                 <div class="row">
                     <?php
                     show_products_for_customers();
-
+                        if(isset($_GET['successfully_add_to_cart'])){
+                            echo "
+                            <script>swal('Successfully!', 'Product added successfully ', 'success');</script>
+                        ";
+                        }
+                        if(isset($_GET['successfully_quantity_increase'])){
+                            echo "
+                            <script>swal('Quantity Increases!', 'As product already in cart, So we updated quantity  ', 'success');</script>
+                        ";
+                        }
+                        
                     ?>
                 </div>
             </div>

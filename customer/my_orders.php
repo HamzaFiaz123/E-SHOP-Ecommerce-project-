@@ -10,6 +10,11 @@
     if (!isset($_SESSION['email'])) {
         echo "<script>window.location.replace('../login_page.php')</script>";
     }
+    if (isset($_GET['successfully_order_placed'])) {
+        echo "
+        <script>swal('Order Placed', 'successfully placed order', 'success');</script>
+    ";
+    }
     ?>
     <link rel="stylesheet" href="../style/css.css">
     <title>Account</title>

@@ -59,6 +59,12 @@ include "../functions.php";
                                 </li>
                             </ul>
                         </div>
+
+                        <div class="container">
+                            <div class="jumbotron">
+                                
+                            </div>
+                        </div>
                         <?php
             
                         ?>
@@ -110,6 +116,11 @@ include "../functions.php";
                             </table>
 
                             <h4 class="text-right">Net Sale : <?php echo $total_sale ?> Pkr</h4>
+                            <div class="list_container">
+                                <div class="container">
+
+                                </div>
+                            </div>
 
                         </div>
 

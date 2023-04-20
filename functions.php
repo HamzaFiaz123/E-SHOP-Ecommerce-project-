@@ -436,7 +436,7 @@ function order_placement()
             $delte_cart = "delete from cart where ip_add='$ip'";
             $result_delete = mysqli_query($conn, $delte_cart);
             echo "
-            <script>swal('Order Placed!', 'Your order placed successfully ', 'success');</script>
+            <script>window.location.replace('customer/my_orders.php?successfully_order_placed=$order_id');</script>
         ";
         } else {
             echo "
@@ -558,8 +558,7 @@ function login_user()
         $_SESSION['id'] = $row['id'];
         if (mysqli_num_rows($result) > 0) {
             echo '<script>
-            swal("Successfully Login!", "You logged in successfully!", "success");
-            window.location.replace("customer/index.php");
+            window.location.replace("checkout.php");
         </script>';
         } else {            
             echo'

@@ -32,13 +32,13 @@
       </div>
       <div class="col-lg-3">
         <h5 class="mb-3 ha_comp_name">Popular Tags</h5>
-        <p class="foot-option-clr d-inline-block border p-1 m-2">Black</p>
-        <p class="foot-option-clr d-inline-block border p-1 m-2">Bags</p>
-        <p class="foot-option-clr d-inline-block border p-1 m-2">Men</p>
-        <p class="foot-option-clr d-inline-block border p-1 m-2">Clothes</p>
-        <p class="foot-option-clr d-inline-block border p-1 m-2">Womens</p>
-        <p class="foot-option-clr d-inline-block border p-1 m-2">Watches</p>
-        <p class="foot-option-clr d-inline-block border p-1 m-2">Home</p>
+        <p class="foot-option-clr d-inline-block  p-1 m-2" style="border:1px solid #777;">Black</p>
+        <p class="foot-option-clr d-inline-block  p-1 m-2" style="border:1px solid #777;">Bags</p>
+        <p class="foot-option-clr d-inline-block p-1 m-2" style="border:1px solid #777;">Men</p>
+        <p class="foot-option-clr d-inline-block p-1 m-2" style="border:1px solid #777;">Clothes</p>
+        <p class="foot-option-clr d-inline-block p-1 m-2" style="border:1px solid #777;">Womens</p>
+        <p class="foot-option-clr d-inline-block p-1 m-2" style="border:1px solid #777;">Watches</p>
+        <p class="foot-option-clr d-inline-block  p-1 m-2" style="border:1px solid #777;">Home</p>
       </div>
     </div>
   </div>
