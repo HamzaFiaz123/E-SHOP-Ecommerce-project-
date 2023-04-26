@@ -148,14 +148,29 @@ if (isset($_POST['decrease_qty_btn'])) {
                 }
             }
             ?>
+            <form action="" method="post">
+            <button id="myButton">Click me</button>
+            </form>
 
 
-         
-        </div>
-    </div>
-</div>
-</div>
+
+
 
 <?php
 include "partials/footer.php";
 ?>
+
+<script>
+    $(document).ready(function() {
+  $('#myButton').click(function() {
+    $.ajax({
+      type: 'POST',
+      url: 'cart.php',
+      success: function(data) {
+        $('#toast').fadeIn().delay(2000).fadeOut();
+      }
+    });
+  });
+});
+
+</script>
