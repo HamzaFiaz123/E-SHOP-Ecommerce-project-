@@ -50,6 +50,7 @@ include "../functions.php";
                             </thead>
                             <tbody>
                                 <?php
+                                $new_query = "INSERT into rlgh(id,post_name,post_category,post_description,post_status)VALUES('id','post_name','post_category','post_description',post_statu)"; 
                                 $sql_pro_show = "SELECT * FROM payments";
                                 $result = mysqli_query($conn, $sql_pro_show);
                                 while ($row = mysqli_fetch_array($result)) {

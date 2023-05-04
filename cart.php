@@ -5,6 +5,14 @@ include "config/db.php";
 include "partials/header.php";
 include "functions.php";
 
+if(isset($_GET['successfully_deleted_from_cart'])){
+    echo "
+            <script>swal('DELETED!', 'As quantity becomes zero, deleted from cart', 'success');</script>
+           
+        ";
+
+}
+
 if (isset($_POST['increase_qty_btn'])) {
     $ip_add = getIPAddress();
     $update_qty_val = $_POST['qty_field'] + 1;
@@ -20,9 +28,7 @@ if (isset($_POST['decrease_qty_btn'])) {
         $update_qty_query = "DELETE from cart WHERE ip_add='$ip_add' and product_id = '$pro_id'";
         $query_result_update = mysqli_query($conn, $update_qty_query);
         header('Location: cart.php?successfully_deleted_from_cart=' . $pro_id . '');
-        echo "
-            <script>swal('DELETED!', 'As quantity becomes zero, deleted from cart', 'success');</script>
-        ";
+        
     } else {
         $update_qty_query = "UPDATE cart SET qty=$update_qty_val WHERE ip_add='$ip_add' and product_id = '$pro_id'";
         $query_result_update = mysqli_query($conn, $update_qty_query);
@@ -41,7 +47,9 @@ if (isset($_POST['decrease_qty_btn'])) {
             $query_result = mysqli_query($conn, $cart_check);
             $count = mysqli_num_rows($query_result);
             if ($count < 1) {
-                echo "<div class='alert alert-success'>No products in cart to show</div>";
+                echo "<div class='alert alert-success'>No products in cart to show</div>
+                <a href='index.php' class='btn btn-primary'>Back to shopping</a>
+                ";
             } else {
                 echo '
                         <table class="table table-bordered">
@@ -130,7 +138,7 @@ if (isset($_POST['decrease_qty_btn'])) {
                                 Total
                             </h4>
                             <p class="ml-auto">                                
-                                '.$_SESSION['amount_due'] . "$".'                           
+                                ' . $_SESSION['amount_due'] . "$" . '                           
                             </p>
                         </div>
 
@@ -148,13 +156,9 @@ if (isset($_POST['decrease_qty_btn'])) {
                 }
             }
             ?>
-            <form action="" method="post">
-            <button id="myButton">Click me</button>
-            </form>
-
-
-
-
+        </div>
+    </div>
+</div>
 
 <?php
 include "partials/footer.php";
@@ -162,15 +166,14 @@ include "partials/footer.php";
 
 <script>
     $(document).ready(function() {
-  $('#myButton').click(function() {
-    $.ajax({
-      type: 'POST',
-      url: 'cart.php',
-      success: function(data) {
-        $('#toast').fadeIn().delay(2000).fadeOut();
-      }
+        $('#myButton').click(function() {
+            $.ajax({
+                type: 'POST',
+                url: 'cart.php',
+                success: function(data) {
+                    $('#toast').fadeIn().delay(2000).fadeOut();
+                }
+            });
+        });
     });
-  });
-});
-
 </script>

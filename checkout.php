@@ -164,9 +164,9 @@ if (!isset($_SESSION['email'])) {
                         }
                     }
                     ?>
-                </select>
+                </select><br>
 
-                <a href="Offline_back_details.php" class="form-group">If you want to pay offline, then click here</a>
+                <a href="Offline_back_details.php" class="form-group">If you want to pay offline, then click here</a><br><br>
                 <button type="submit" name="place-order-btn" class="btn btn-dark">Place Order</button>
             </form>
 
