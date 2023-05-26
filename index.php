@@ -34,7 +34,7 @@ include "functions.php";
         ?>
 
         <div class="header_info_box slider_cation">
-            <h2 class="mb-2">Winter Fashion Trends tf</h2>
+            <h2 class="mb-2">Winter Fashion Trends</h2>
             <h3 class=" text-dark text-uppercase mb-2">Get up to 30% off</h3>
             <h4 class="text-dark mb-3">on Jackets</h4>
             <h5 class="text-uppercase text-dark mb-2">Starting at<span class="bg-white px-4 py-3 mb-3 text-dark"><sup>$</sup>199<sup>99</sup></span></h5>
