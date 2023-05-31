@@ -30,28 +30,16 @@ function show_products_for_customers()
             $pro_price = $row['prod_price'];
             $stock = $row['Stock_added'];
             $pro_image = $row['prod_image'];
-            echo '<div class="col-lg-3 col-md-4">
+            echo '  <div class="col-lg-3 col-md-4">
                         <div class="product_boxs">
+                            <a href="add_to_wishlist.php?pro_id=' . $pro_id .' " class="wishlist-btn"><img src="images/love.png" style="height:26px;"></a>
                             <img src="uploaded_images/' . $pro_image . '" alt="">
-                            <div class="product_info text-center">
-                                 <h5>' . $pro_name . '</h5>
-                                 <p>Beutifull watch rado</p>
-                                 <i class="fa fa-star mr-2 checked"></i>
-                                 <i class="fa fa-star mr-2 checked"></i>
-                                 <i class="fa fa-star mr-2 checked"></i>
-                                 <i class="fa fa-star mr-2 checked"></i>
-                                 <i class="fa fa-star mr-2 checked"></i>
-                                 <div class="d-flex justify-content-between">
-                                    <h6>' . $pro_price . '$</h6>
-                                    <a href=" addcart.php?pro_id=' . $pro_id . '"><img src="images/shopping-bag.png" style="height: 20px;margin-right:12px;" alt=""></a>';
-            // if($stock < 1){
-            //     echo "<h6>Availability <small class='ml-1'>Out of stock</small></h6>";
-            // }
-            // else{
-            //     echo "<h6>Availability <small class='ml-3'>In stock</small></h6>";
-            // }
-            echo '
-                                 </div>
+                            <div class="product_info">
+                                 <h4>' . $pro_name . '</h4>
+                                 <p>' . $pro_price . '$</p>
+                                <a href=" addcart.php?pro_id=' . $pro_id . '" class="btn btn-secondary">Add to cart</a>';
+
+                            echo '                                 
                             </div>
                         </div>
                     </div>';
@@ -124,7 +112,18 @@ function total_cart_item()
     $sql_pro_show = "SELECT * FROM cart where ip_add='$ip_add'";
     $result = mysqli_query($conn, $sql_pro_show);
     $count = mysqli_num_rows($result);
-    echo $count;
+    echo "<small style='color:red;font-size:19px;margin-left:-12px;'>$count</small>";
+
+}
+
+function wishlist_count()
+{
+    include "config/db.php";
+    $ip_add = getIPAddress();
+    $sql_pro_show = "SELECT * FROM wishlist where customer_ip='$ip_add'";
+    $result = mysqli_query($conn, $sql_pro_show);
+    $count = mysqli_num_rows($result);
+    echo "<small style='color:red;font-size:19px;margin-left:-12px;'>$count</small>";
 
 }
 
@@ -141,28 +140,16 @@ function search_products()
                 $pro_name = $row['prod_name'];
                 $pro_price = $row['prod_price'];
                 $pro_image = $row['prod_image'];
-                echo '<div class="col-lg-3 col-md-4">
+                echo '  <div class="col-lg-3 col-md-4">
                 <div class="product_boxs">
+                    <a href="add_to_wishlist.php?pro_id=' . $pro_id .' " class="wishlist-btn"><img src="images/love.png" style="height:26px;"></a>
                     <img src="uploaded_images/' . $pro_image . '" alt="">
-                    <div class="product_info text-center">
-                         <h5>' . $pro_name . '</h5>
-                         <p>Beutifull watch rado</p>
-                         <i class="fa fa-star mr-2 checked"></i>
-                         <i class="fa fa-star mr-2 checked"></i>
-                         <i class="fa fa-star mr-2 checked"></i>
-                         <i class="fa fa-star mr-2 checked"></i>
-                         <i class="fa fa-star mr-2 checked"></i>
-                         <div class="d-flex justify-content-between">
-                            <h5>' . $pro_price . '$</h5>
-                            <a href=" addcart.php?pro_id=' . $pro_id . '"><img src="images/shopping-bag.png" style="height: 20px;margin-right:12px;" alt=""></a>';
-                // if($stock < 1){
-                //     echo "<h6>Availability <small class='ml-1'>Out of stock</small></h6>";
-                // }
-                // else{
-                //     echo "<h6>Availability <small class='ml-3'>In stock</small></h6>";
-                // }
-                echo '
-                         </div>
+                    <div class="product_info">
+                         <h4>' . $pro_name . '</h4>
+                         <p>' . $pro_price . '$</p>
+                        <a href=" addcart.php?pro_id=' . $pro_id . '" class="btn btn-secondary">Add to cart</a>';
+
+                    echo '                                 
                     </div>
                 </div>
             </div>';
@@ -393,6 +380,21 @@ function add_products()
             $result = mysqli_query($conn, $sql);
             if ($result) {
                 echo "<div class='alert alert-success'>Successfully enter product</div>";
+                $sql = "SELECT email FROM subscriptions";
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                    
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $to = $row["email"];
+                        $subject = "New Product Alert";
+                        $message = "A new product ($prod_name) has been added. Check it out now!";
+                        $headers = "From:mughal.jamshaid12345.com"; 
+
+                        // Send the email
+                        mail($to, $subject, $message, $headers);
+                    }
+                }
             } else {
                 echo "<div class='alert alert-success'>Product not added Try again</div>";
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -604,7 +606,7 @@ function register_user()
     if (isset($_POST['register_btn'])) {
         $email = $_POST['email'];
         $pass = $_POST['password'];
-        $reg_sql = "insert into customer_account (customer_email, customer_password, customer_ip,customer_name,customer_phone, customer_address, customer_country, postal_code) VALUES ('$email', '$pass', '$ip',' ',' ',' ',' ','0')";
+        $reg_sql = "insert into customer_account (customer_email, customer_password, customer_ip,customer_name,customer_phone, customer_address, customer_country, postal_code,customer_image) VALUES ('$email', '$pass', '$ip',' ',' ',' ',' ','0','')";
         $result = mysqli_query($conn, $reg_sql);
         if ($result) {
             echo "<div class='alert alert-success'>Successfully register</div>";

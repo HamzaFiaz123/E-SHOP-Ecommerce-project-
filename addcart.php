@@ -22,10 +22,12 @@ $ip_add = getIPAddress();
 $cart_check = "SELECT * FROM cart where ip_add='$ip_add' AND product_id='$p_id'";
 $query_result = mysqli_query($conn, $cart_check);
 $row=mysqli_fetch_array($query_result);
-$qty = $row['qty'];
-$qty_increase = $row['qty'] + 1;
+
+
 $count = mysqli_num_rows($query_result);
 if ( $count > 0) {
+    $qty = $row['qty'];
+$qty_increase = $row['qty'] + 1;
    $update_quantity_query = "UPDATE cart set qty='$qty_increase' where ip_add='$ip_add' AND product_id='$p_id'";
    $run_result = mysqli_query($conn, $update_quantity_query);
    if($run_result){

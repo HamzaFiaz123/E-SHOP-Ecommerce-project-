@@ -2,10 +2,10 @@
 <html lang="en">
     <head>
         <?php
+        error_reporting(E_ALL & ~E_NOTICE);
         session_start();
         include "../config/db.php";
         include "../partials/links.php";
-        include "header.php";
         if(!isset($_SESSION['email'])){
             echo "<script>window.location.replace('../login_page.php');</script>";
         }
@@ -35,7 +35,7 @@
                         <h6 class="ml-3 mb-3">From your account dashboard you can view your orders, manage your account , and  manage your passwords</h6>
                         <div class="col-lg-4 col-md-6">
                             <div class="border d-flex justify-content-center align-items-center cus_order_detail_box">
-                                <a href="#">Orders</a>
+                                <a href="my_orders.php">Orders</a>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">

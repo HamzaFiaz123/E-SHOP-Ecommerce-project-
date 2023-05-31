@@ -25,7 +25,7 @@ include "functions.php";
 </head>
 
 <body>
-    
+
 
 
     <section class="head_hero_section">
@@ -43,7 +43,7 @@ include "functions.php";
 
     </section>
 
-
+    
 
 
 
@@ -53,9 +53,9 @@ include "functions.php";
             <div class="container">
                 <div class="row">
                     <?php
-                show_categories_info();
-                ?>
-            </div>
+                    show_categories_info();
+                    ?>
+                </div>
             </div>
         </div>
     </section>
@@ -68,17 +68,28 @@ include "functions.php";
                 <div class="row">
                     <?php
                     show_products_for_customers();
-                        if(isset($_GET['successfully_add_to_cart'])){
-                            echo "
+                    if (isset($_GET['successfully_add_to_cart'])) {
+                        echo "
                             <script>swal('Successfully!', 'Product added successfully ', 'success');</script>
                         ";
-                        }
-                        if(isset($_GET['successfully_quantity_increase'])){
-                            echo "
+                    }
+                    if (isset($_GET['successfully_quantity_increase'])) {
+                        echo "
                             <script>swal('Quantity Increases!', 'As product already in cart, So we updated quantity  ', 'success');</script>
                         ";
-                        }
-                        
+                    }
+
+                    if (isset($_GET['product_alraedy_in_wishlist'])) {
+                        echo "
+                            <script>swal('Successfully!', 'product alraedy in wishlist', 'success');</script>
+                        ";
+                    }
+                    if (isset($_GET['successfully_add_to_wishlist'])) {
+                        echo "
+                            <script>swal('Successfully!', 'successfully add to wishlist  ', 'success');</script>
+                        ";
+                    }
+
                     ?>
                 </div>
             </div>
@@ -137,10 +148,39 @@ include "functions.php";
                     <small>Get all the latest information on Events, Sales and Offers.</small>
                 </div>
                 <div class="col-lg-5">
-                    <div style="background-color: #dddddd;" class="d-flex pl-3 py-1">
-                        <input type="email" name="" id="ha_cus_field" class="w-100" placeholder="Email Address..">
-                        <button class="btn btn-dark py-2">Subscribe</button>
-                    </div>
+                    <form action="" method="post">
+                        <div style="background-color: #dddddd;" class="d-flex pl-3 py-1">
+                            <input type="email" name="subscribtion_email" id="ha_cus_field" class="w-100" placeholder="Email Address..">
+                            <button class="btn btn-dark py-2" name="subscribe_btn">Subscribe</button>
+                            <?php
+                            if (isset($_POST['subscribe_btn'])) {
+                                $subscribe_email = $_POST['subscribtion_email'];
+                                $subscribe_check = "SELECT * FROM subscriptions where email='$subscribe_email'";
+                                $query_result = mysqli_query($conn, $subscribe_check);
+                                $row = mysqli_fetch_array($query_result);
+                                $count = mysqli_num_rows($query_result);
+                                if ($count > 0) {
+                                    echo "
+                                    <script>swal('Already exsit', 'This email already exist', 'error');</script>
+                                ";
+                                } else {
+                                    $insert_subscription = "INSERT into subscriptions(email)values('$subscribe_email')";
+                                    $run_query = mysqli_query($conn, $insert_subscription);
+                                    if ($run_query) {
+                                        echo "
+                                            <script>swal('Successfully!', 'Subscribe Successfully', 'success');</script>
+                                        ";
+                                    } else {
+                                        echo "
+                                            <script>swal('Error!', 'Please try again', 'error');</script>
+                                        ";
+                                    }
+                                }
+                            }
+
+                            ?>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-lg-3 ">
                     <div class="cus_icons_box">
@@ -207,46 +247,44 @@ include "functions.php";
     ?>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-        
 
-<script>
-    
-    $('.slick_try').slick({
-        dots: true,
-        slidesToShow: 6,
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 1200,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        infinite: true,
-        dots: true
-      }
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-    // You can unslick at a given breakpoint now by adding:
-    // settings: "unslick"
-    // instead of a settings object
-  ]
-});
-</script>
+
+    <script>
+        $('.slick_try').slick({
+            dots: true,
+            slidesToShow: 6,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 1200,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+                // You can unslick at a given breakpoint now by adding:
+                // settings: "unslick"
+                // instead of a settings object
+            ]
+        });
+    </script>
 </body>
 
 </html>

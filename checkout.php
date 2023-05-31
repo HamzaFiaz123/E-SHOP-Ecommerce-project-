@@ -151,22 +151,12 @@ if (!isset($_SESSION['email'])) {
                     </p>
                 </div>
                 <h5 class="mb-3">Payments Method</h5>
-                <label for="">Payment Options</label>
-                <select name="payment_method" class="form-control w-50" id="">
-                    <?php
-                    $sql_pro_show = "SELECT * FROM payments_methods";
-                    $result = mysqli_query($conn, $sql_pro_show);
-                    if (mysqli_num_rows($result) >= 1) {
-                        while ($row = mysqli_fetch_array($result)) {
-                            $id = $row['id'];
-                            $payment_method = $row['payment_method'];
-                            echo "<option value='$payment_method'>$payment_method</option>";
-                        }
-                    }
-                    ?>
-                </select><br>
+                    <input type="radio" value="stripe" name="payment_method"><a href="stripe/index.php" style="    margin-left: 14px;
+    color: black;">Pay by stripe</a><br>
+                    <input type="radio" value="pay offline" name="payment_method"><a href="Offline_back_details.php"  style="    margin-left: 14px;
+    color: black;">Pay offline</a><br>    
 
-                <a href="Offline_back_details.php" class="form-group">If you want to pay offline, then click here</a><br><br>
+                <!-- <a href="Offline_back_details.php" class="form-group">If you want to pay offline, then click here</a><br><br> -->
                 <button type="submit" name="place-order-btn" class="btn btn-dark">Place Order</button>
             </form>
 

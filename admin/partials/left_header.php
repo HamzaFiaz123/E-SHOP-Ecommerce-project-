@@ -35,7 +35,7 @@
                         <ul class="collapse list-unstyled" id="element">
                            <li><a href="today_sales.php">> <span>Todays Sales</span></a></li>
                            <li><a href="weekly_sale.php">> <span>Weekly Sales</span></a></li>
-                           <li><a href="Monthly_sales.php">> <span>Monthly Sales</span></a></li>
+                           <li><a href="monthly_sales.php">> <span>Monthly Sales</span></a></li>
                            <li><a href="sales.php">> <span>Net Sale</span></a></li>
 
                         </ul>
@@ -44,6 +44,8 @@
                         <a href="#element2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Orders</span></a>
                         <ul class="collapse list-unstyled" id="element2">
                            <li><a href="todays_orders.php">> <span>Todays Orders</span></a></li>
+                           <li><a href="weekly_orders.php">> <span>Weekly Orders</span></a></li>
+                           <li><a href="monthly_orders.php">> <span>Monthly Orders</span></a></li>
                            <li><a href="orders.php">> <span>All Orders</span></a></li>
 
                         </ul>

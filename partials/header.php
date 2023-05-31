@@ -43,10 +43,9 @@
         </li>
         
       </ul>
-      <div class="ml-auto">
-      <img src="images/loupe.png" id="icons_height" alt="">
+      <div class="ml-auto">        
         <a href="customer/index.php"><img src="images/user.png" id="icons_height" alt=""></a>
-        <img src="images/love.png" id="icons_height" alt="">
+        <a href="wishlist.php"><img src="images/love.png" id="icons_height" alt=""></a>
         <a href="cart.php"><img src="images/shopping-bag.png" id="icons_height" alt=""></a>
       </div>
     </div>

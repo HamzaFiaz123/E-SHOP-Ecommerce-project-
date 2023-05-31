@@ -1,4 +1,4 @@
-<!-- <div class="container-fluid">
+<div class="container-fluid">
   <nav class="navbar navbar-expand-lg">
     <a href="../index.php" class="navbar-brand">
       <img src="images/logo-black.png" class="logo" alt="">
@@ -48,7 +48,7 @@
 </div>
 
 
-<script>
+<!-- <script>
   $(document).ready(function () {
     $(window).bind('scroll', function () {
       var gap = 50;

@@ -3,6 +3,7 @@
 <head>
 <?php
 include "partials/links.php";
+include "functions.php";
 ?>
   <title>E-SHOP</title>
 </head>
